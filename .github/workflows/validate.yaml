@@ -1,4 +1,4 @@
-name: HACS validation
+name: Integration validation
 
 on:
   push:
@@ -10,6 +10,34 @@ permissions:
   contents: read
 
 jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Install supported Home Assistant and test runner
+        run: python -m pip install homeassistant==2026.10.2 pytest==9.1.1
+      - name: Check runtime requirements against Home Assistant constraints
+        run: python -m pytest tests/test_dependencies.py -q
+      - name: Resolve fresh runtime dependencies under Home Assistant constraints
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+          from homeassistant.requirements import pip_kwargs
+
+          manifest = json.loads(Path('custom_components/overhead/manifest.json').read_text())
+          subprocess.run([
+              sys.executable, '-m', 'uv', 'pip', 'install', '--dry-run',
+              '--python', sys.executable,
+              '--constraint', pip_kwargs(None)['constraints'],
+              *manifest['requirements'],
+          ], check=True)
+          PY
   hacs:
     runs-on: ubuntu-latest
     steps:

@@ -4,12 +4,17 @@ Verified on 22 October 2026 using macOS ARM64, Python 3.14.8 and Home Assistant 
 
 ## Results
 
-**28 tests passed.** Source compilation, Python undefined/unused-name checks, and JavaScript syntax checks also passed. Six warnings in the complete test run originated in Home Assistant/aiohttp/backoff dependencies; no test failed.
+**29 tests passed for 1.0.1**, using Pillow 12.3.0 and NumPy 2.3.2. Six warnings in the complete test run originated in Home Assistant/aiohttp/backoff dependencies; no test failed.
+
+Version 1.0.0's NumPy 2.5.4 pin conflicts with Core 2026.10.2's `package_constraints.txt`, which requires NumPy 2.3.2. The original environment already had 2.5.4 installed, so its setup tests skipped the constrained installation and missed the failure on a fresh Home Assistant installation. The conflict was reproduced with the real dependency resolver. The added regression test fails against 1.0.0's manifest and passes against the corrected manifest.
+
+For 1.0.1, both runtime requirements installed into an empty temporary directory through Home Assistant's own package installer with its actual constraints. A binary-only resolution also succeeded for Python 3.14 on `aarch64-unknown-linux-musl`, the 64-bit Home Assistant OS package platform. These checks establish dependency compatibility; they do not establish execution on a physical Pi. An authenticated request to the real config-flow HTTP endpoint returned the setup form successfully. GitHub validation now checks the dependency constraints and performs a fresh dependency resolution.
 
 The suite covers:
 
 - Real Home Assistant custom-component discovery, dependency setup, config entry setup, creation of two real sensor entities, and unload/worker cleanup.
 - Config-flow defaults, coordinate/settings validation, server-only option rejection, administrator restrictions and entry selection.
+- Runtime dependency pins compatible with the supported Home Assistant Core package constraints.
 - Feed fallback, malformed/non-finite aircraft values, explicit stale-feed labeling and shared feed polling.
 - Closest approach, first/last seen, two-day retention, independent saved windows, non-consuming previews and persisted windows after restart.
 - Resetting old traffic windows when the location, radius or feed is changed.

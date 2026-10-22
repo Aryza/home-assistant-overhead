@@ -148,6 +148,7 @@ The visual editor exposes common options and an additional-options JSON field. T
 
 ## Troubleshooting
 
+- **Config flow could not be loaded / NumPy installation failure in 1.0.0:** update Overhead to **1.0.1 or newer** in HACS, restart Home Assistant completely, then add the integration again. Version 1.0.0 pinned a NumPy version that conflicts with Home Assistant's package constraints; 1.0.1 fixes the pin. A full restart also clears Home Assistant's cached dependency-install failure.
 - **Custom element doesn't exist:** restart Home Assistant, check the JavaScript module resource URL, and reload the browser. Check for errors in the Home Assistant log.
 - **No integration found:** check the exact `custom_components/overhead/manifest.json` path and the supported Home Assistant version, then restart.
 - **No aircraft:** try a wider integration radius; the current feed may have no nearby coverage. Stale feed responses are labelled and excluded from new observations.
