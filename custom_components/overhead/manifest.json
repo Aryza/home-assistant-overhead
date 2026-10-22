@@ -1,0 +1,12 @@
+{
+  "domain": "overhead",
+  "name": "Overhead",
+  "version": "1.0.0",
+  "config_flow": true,
+  "documentation": "https://github.com/Aryza/home-assistant-overhead",
+  "issue_tracker": "https://github.com/Aryza/home-assistant-overhead/issues",
+  "dependencies": ["http", "websocket_api"],
+  "codeowners": ["@Aryza"],
+  "iot_class": "cloud_polling",
+  "requirements": ["Pillow==12.3.0", "numpy==2.5.4"]
+}

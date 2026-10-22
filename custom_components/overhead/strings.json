@@ -1,0 +1,57 @@
+{
+  "title": "Overhead",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Aircraft overhead",
+        "description": "Choose the location to observe. Home coordinates are filled in. Photo mode works without a paid account. Add a planespotters.net contact to improve photo API access.",
+        "data": {
+          "name": "Location name",
+          "latitude": "Latitude",
+          "longitude": "Longitude",
+          "radius_km": "Radius (km)",
+          "source": "Aircraft feed",
+          "receiver_url": "Local receiver URL (when selected)",
+          "contact": "Contact for planespotters.net (email or website)",
+          "fal_api_key": "fal.ai API key",
+          "generation_enabled": "Enable automatic and manual AI painting",
+          "gen_daily_usd": "Daily estimated painting limit (USD; 0 disables new jobs)",
+          "gen_parallel": "Concurrent painting jobs",
+          "logo_source": "Airline logo provider",
+          "visitor_refs": "Optional visitor reference pictures (craft = URL or local file)",
+          "cache_mb": "Storage allowance (MB)"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "Check coordinates, radius and source. A local receiver needs a complete http(s) URL."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Overhead settings",
+        "description": "AI painting uses your fal.ai account. Limits reserve estimated costs before each job; actual provider billing can differ. Zero daily budget disables new jobs. Keep generation off to use only photos and saved paintings.",
+        "data": {
+          "name": "Location name",
+          "latitude": "Latitude",
+          "longitude": "Longitude",
+          "radius_km": "Radius (km)",
+          "source": "Aircraft feed",
+          "receiver_url": "Local receiver URL (when selected)",
+          "contact": "Contact for planespotters.net (email or website)",
+          "fal_api_key": "fal.ai API key",
+          "generation_enabled": "Enable automatic and manual AI painting",
+          "gen_daily_usd": "Daily estimated painting limit (USD; 0 disables new jobs)",
+          "gen_parallel": "Concurrent painting jobs",
+          "logo_source": "Airline logo provider",
+          "visitor_refs": "Optional visitor reference pictures (craft = URL or local file)",
+          "cache_mb": "Storage allowance (MB)"
+        }
+      }
+    },
+    "error": {
+      "invalid_settings": "Check coordinates, receiver URL and budget. Enabling AI requires a fal.ai key."
+    }
+  }
+}

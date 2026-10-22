@@ -1,0 +1,48 @@
+# Add the JS module resource before adding these cards.
+# With several integration entries, select a location in the visual editor.
+type: vertical-stack
+cards:
+  - type: custom:overhead-card
+    profile_id: living_photo
+    view: photo
+    height: 420
+    strip: 4
+
+  - type: custom:overhead-card
+    profile_id: living_plate
+    view: plate
+    pictures: paintings
+    style: poster
+    backdrop: none
+    viewpoint: livery
+    unpainted: photo
+    height: 420
+
+  - type: custom:overhead-card
+    profile_id: living_cluster
+    view: cluster
+    pictures: paintings
+    style: watercolour
+    count: 8
+    height: 500
+
+  - type: custom:overhead-card
+    profile_id: living_scene
+    view: scene
+    pictures: paintings
+    style: poster
+    backdrop: live
+    height: 420
+
+  - type: custom:overhead-card
+    profile_id: hourly_traffic
+    view: cluster
+    period: since
+    snapshot_minutes: 60
+    pictures: photos
+    count: 12
+    labels: [type, route, altitude, distance, seen]
+    height: 500
+
+  - type: custom:overhead-card
+    view: management
