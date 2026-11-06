@@ -1,10 +1,12 @@
 # Verification
 
-Verified on 22 October 2026 using macOS ARM64, Python 3.14.8 and Home Assistant Core 2026.10.2 in an isolated local environment.
+Verified on 6 November 2026 using macOS ARM64 and Python 3.14.10 in isolated environments for Home Assistant Core 2026.10.2 and 2026.11.0.
 
 ## Results
 
-**29 tests passed for 1.0.1**, using Pillow 12.3.0 and NumPy 2.3.2. Six warnings in the complete test run originated in Home Assistant/aiohttp/backoff dependencies; no test failed.
+**29 tests passed for 1.0.2 in each environment**: Core 2026.10.2 with Pillow 12.3.0, and Core 2026.11.0 with Pillow 13.0.0. Both use NumPy 2.3.2. Each complete run emitted six warnings from Home Assistant/aiohttp/backoff dependencies; no test failed. Source compilation, Python name checks and JavaScript syntax checks also passed.
+
+Core 2026.11.0 requires Pillow 13.0.0, conflicting with Overhead 1.0.1's Pillow 12.3.0 pin. The dependency regression check and real resolver both reproduced this conflict before the fix. Overhead 1.0.2 declares `Pillow>=12.3.0,<14.0.0`, allowing Home Assistant's constraints to select its compatible version. Fresh dependency installation through Home Assistant's installer passed under both Core versions. Binary-only resolution for Python 3.14 on `aarch64-unknown-linux-musl` selected Pillow 13.0.0 and NumPy 2.3.2 under November's constraints. GitHub dependency validation now runs for both Core versions. The constraint test reads the bundled constraint file directly, without relying on an internal helper signature that changed in November.
 
 Version 1.0.0's NumPy 2.5.4 pin conflicts with Core 2026.10.2's `package_constraints.txt`, which requires NumPy 2.3.2. The original environment already had 2.5.4 installed, so its setup tests skipped the constrained installation and missed the failure on a fresh Home Assistant installation. The conflict was reproduced with the real dependency resolver. The added regression test fails against 1.0.0's manifest and passes against the corrected manifest.
 
@@ -14,7 +16,7 @@ The suite covers:
 
 - Real Home Assistant custom-component discovery, dependency setup, config entry setup, creation of two real sensor entities, and unload/worker cleanup.
 - Config-flow defaults, coordinate/settings validation, server-only option rejection, administrator restrictions and entry selection.
-- Runtime dependency pins compatible with the supported Home Assistant Core package constraints.
+- Runtime requirements compatible with the tested Home Assistant Core package constraints.
 - Feed fallback, malformed/non-finite aircraft values, explicit stale-feed labeling and shared feed polling.
 - Closest approach, first/last seen, two-day retention, independent saved windows, non-consuming previews and persisted windows after restart.
 - Resetting old traffic windows when the location, radius or feed is changed.

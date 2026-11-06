@@ -4,7 +4,7 @@ Aircraft overhead, on your Home Assistant dashboard: **Photo, Plate, Cluster and
 
 This is an independent custom integration, with the original rendering, aircraft metadata, artwork styles, cut-out and packing logic. It does not require Tesserae.
 
-**Target: Home Assistant Core 2026.10.0 or newer, on a current 64-bit Raspberry Pi installation. Tested locally with Core 2026.10.2 and Python 3.14.8.** The Pi itself has not been accessed or tested. Earlier Home Assistant versions are not supported by this package's new config/schema APIs.
+**Target: Home Assistant Core 2026.10.0 or newer, on a current 64-bit Raspberry Pi installation. Tested locally with Core 2026.10.2 and 2026.11.0 on Python 3.14.10.** The Pi itself has not been accessed or tested. Earlier Home Assistant versions are not supported by this package's new config/schema APIs.
 
 ## Install with HACS
 
@@ -34,7 +34,7 @@ See [HACS custom repository instructions](https://www.hacs.xyz/docs/faq/custom_r
 ## Manual installation
 
 1. Extract the supplied ZIP on your computer. Copy **`custom_components/overhead`** into your Home Assistant configuration directory, so the final path is **`/config/custom_components/overhead/manifest.json`** on Home Assistant OS. Use your usual Samba, SSH or file-management access. On Container/Core installations, use the mounted configuration directory instead of `/config`.
-2. Restart Home Assistant completely. Its integration installer downloads the pinned Pillow and NumPy dependencies; the first restart can take longer on a Pi.
+2. Restart Home Assistant completely. Its integration installer downloads the Pillow and NumPy dependencies under Home Assistant's package constraints; the first restart can take longer on a Pi.
 3. Open **Settings → Devices & services → Add integration**, search for **Overhead**, and add it. Home Assistant's home coordinates are prefilled. The default is a 25 km radius with public aircraft feeds. Supply an email or website contact for the planespotters.net photo API.
 4. In your dashboard's **Resources** list, add a **JavaScript module** resource with this URL:
 
@@ -148,6 +148,7 @@ The visual editor exposes common options and an additional-options JSON field. T
 
 ## Troubleshooting
 
+- **Pillow installation failure after a November Core upgrade:** update Overhead to **1.0.2 or newer** in HACS, then restart Home Assistant completely. Earlier Overhead versions require Pillow 12.3.0, conflicting with Core 2026.11.0's Pillow 13.0.0 requirement. Version 1.0.2 accepts both tested versions and lets Home Assistant's constraints select the correct one. If installation still fails, include the Core version and the earlier **Unable to install package** log entry when reporting it; the final **Requirements not found** message alone does not identify every possible installation failure.
 - **Config flow could not be loaded / NumPy installation failure in 1.0.0:** update Overhead to **1.0.1 or newer** in HACS, restart Home Assistant completely, then add the integration again. Version 1.0.0 pinned a NumPy version that conflicts with Home Assistant's package constraints; 1.0.1 fixes the pin. A full restart also clears Home Assistant's cached dependency-install failure.
 - **Custom element doesn't exist:** restart Home Assistant, check the JavaScript module resource URL, and reload the browser. Check for errors in the Home Assistant log.
 - **No integration found:** check the exact `custom_components/overhead/manifest.json` path and the supported Home Assistant version, then restart.
